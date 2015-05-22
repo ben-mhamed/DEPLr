@@ -1,0 +1,16 @@
+{
+    "contents" : "Package: DEPLr\nType: Package\nTitle: Simulation Depletion Model with R\nVersion: 1.0\nDate: 2015-03-16\nAuthor: Abdelouahed BEN MHAMED, Abdelmalek Faraj\nMaintainer: Abdelouahed BEN MHAMED  <a.benmhamed@mail.com>\nImports: ggplot2, plyr, reshape2, stringr, data.table\nDescription: Implements a simulation depletion model for short lived species especially octopus\nVignetteBuilder: knitr\nLicense: GPL-3\nSuggests: knitr\n",
+    "created" : 1429785484191.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2563627767",
+    "id" : "DD374BA",
+    "lastKnownWriteTime" : 1429785722,
+    "path" : "~/Wahid/my_packages/DEPLr/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "dcf"
+}

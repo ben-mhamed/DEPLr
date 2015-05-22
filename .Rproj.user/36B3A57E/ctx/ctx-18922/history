@@ -1,0 +1,512 @@
+arr$fleet <- factor(x = arr$fleet,label=fl)
+arr$zone<- factor(x = arr$zone,label=zn)
+View(arr)
+xx <- adply(sim@cpue,c(2,3,4),.fun = mean);names(x)[4] <- "mean"
+yy <- adply(sim@cpue,c(2,3,4),.fun = median);names(y)[4] <- "median"
+zz <- adply(sim@cpue,c(2,3,4),.fun = sd);names(z)[4] <- "sd"
+arr <- cbind(xx,yy[,4],zz[,4])
+nw <- sim@controle@value[6]
+fl <- sim@zones@fleet@name
+zn <- sim@zones@name
+names(arr) <- c("week","fleet","zone","mean","median","sd")
+arr$week <- factor(x = arr$week,label=paste("W",1:nw,sep=""))
+arr$fleet <- factor(x = arr$fleet,label=fl)
+arr$zone<- factor(x = arr$zone,label=zn)
+View(arr)
+xx <- adply(sim@catch.n,c(2,3),.fun = mean);names(x)[3] <- "mean"
+View(xx)
+xx <- adply(sim@stock.n,c(2,3),.fun = mean);names(x)[3] <- "mean"
+View(xx)
+xx <- adply(sim@stock.n,c(2,3),.fun = mean);names(x)[3] <- "mean"
+yy <- adply(object@stock.n,c(2,3),.fun = median);names(y)[3] <- "median"
+zz <- adply(object@stock.n,c(2,3),.fun = sd);names(z)[3] <- "sd"
+arr <- cbind(xx,yy[,3],zz[,3])
+nw <- object@controle@value[6]
+fl <- object@zones@fleet@name
+zn <- object@zones@name
+names(arr) <- c("week","zone","mean","median","sd")
+arr$week <- factor(x = arr$week,label=paste("W",1:nw,sep=""))
+arr$zone<- factor(x = arr$zone,label=zn)
+return(arr)
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+cpue <- summary(sim,"cpue")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+cpue <- summary(sim,"cpue")
+View(cpue)
+View(cpue)
+library(ggplot2)
+ggplot(cpue)+geom_line(aes(x = week,y = mean,color=fleet))+facet_grid(facets = zone~.)
+ggplot(cpue)+geom_line(aes(x = week,y = mean,group=fleet))+facet_grid(facets = zone~.)
+ggplot(cpue)+geom_line(aes(x = week,y = mean,group=fleet,color=fleet))+facet_grid(facets = zone~.)
+ggplot(cpue)+geom_line(aes(x = week,y = mean,group=fleet,color=fleet))+facet_grid(facets = zone~.,scales = "free_y")
+ggplot(cpue)+geom_line(aes(x = week,y = mean))+facet_grid(facets = zone~fleet,scales = "free_y")
+ggplot(cpue)+geom_line(aes(x = week,y = mean))+facet_grid(facets = fleet,scales = "free_y")
+ggplot(cpue)+geom_line(aes(x = week,y = mean))+facet_grid(facets = fleet~.,scales = "free_y")
+ggplot(cpue)+geom_line(aes(x = week,y = mean,group=fleet))+facet_grid(facets = fleet~.,scales = "free_y")
+ggplot(cpue)+geom_line(aes(x = week,y = mean,group=zone))+facet_grid(facets = fleet~.,scales = "free_y")
+ggplot(cpue)+geom_line(aes(x = week,y = mean))+facet_grid(facets = fleet~zone,scales = "free_y")
+ggplot(cpue)+geom_line(aes(x = week,y = mean,group=zone))+facet_wrap(facets = fleet~.,scales = "free_y")
+ggplot(cpue)+geom_line(aes(x = week,y = mean,group=zone))+facet_wrap(facets = fleet~.)
+ggplot(cpue)+geom_line(aes(x = week,y = mean))+facet_wrap(facets = fleet~.)
+ggplot(cpue)+geom_line(aes(x = week,y = mean))+facet_wrap(facets = zone~.)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean))+facet_wrap(facets = zone~fleet)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean),stat = "bin")+facet_wrap(facets = zone~fleet)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean),stat = "identity")+facet_wrap(facets = zone~fleet)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean),stat = "identity")+facet_grid(facets = zone~fleet)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean,color=zone),stat = "identity")+facet_grid(facets = zone~fleet)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean,color=fleet),stat = "identity")+facet_grid(facets = zone~fleet)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean,color=fleet),stat = "identity")+facet_grid(facets = zone~.)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean,color=zone),stat = "identity")+facet_grid(facets = zone~.)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean,group=fleet),stat = "identity")+facet_grid(facets = zone~.)
+ggplot(cpue)+geom_bar(aes(x = week,y = mean,group=zone),stat = "identity")+facet_grid(facets = zone~.)
+## position = "dodge"
+ggplot(cpue, aes(week, mean, fill = fleet)) +
+geom_bar(position = "dodge")
+## position = "dodge"
+ggplot(cpue, aes(week, mean, fill = fleet)) +
+geom_bar(position = "dodge")+facet_grid(facets = zone~.)
+## position = "dodge"
+ggplot(cpue, aes(week, mean, fill = fleet)) +
+geom_bar(position = "dodge",stat="identity")+facet_grid(facets = zone~.)
+## position = "dodge"
+ggplot(cpue, aes(week, mean, fill = fleet)) +
+geom_bar(position = "dodge",stat="identity")+facet_grid(facets = zone~.,scales="free_y")
+ggplot(cpue, aes(week, median, fill = fleet)) +
++ geom_bar(position = "dodge",stat="identity") +
+facet_grid(facets = zone~.,scales="free_y")
+ggplot(cpue, aes(week, median, fill = fleet)) +
++ geom_bar(position = "dodge",stat="identity") +
+facet_grid(facets = zone~.,scales="free_y")
+ggplot(cpue, aes(week, median, fill = fleet)) +
+geom_bar(position = "dodge",stat="identity") +
+facet_grid(facets = zone~.,scales="free_y")
+ggplot(cpue, aes(week, c(median,mean), fill = fleet)) +
+geom_bar(position = "dodge",stat="identity") +
+facet_grid(facets = zone~.,scales="free_y")
+View(cpue)
+library(reshape2)
+View(cpue)
+View(cpue)
+cpuedd <- melt(data = cpue[,1:5],id.vars = names(cpue)[1:3])
+View(cpuedd)
+ggplot(cpue, aes(week, value, fill = fleet,group=variable)) +
+geom_bar(position = "dodge",stat="identity") +
+facet_grid(facets = zone~.,scales="free_y")
+ggplot(cpuedd, aes(week, value, fill = fleet,group=variable)) +
+geom_bar(position = "dodge",stat="identity") +
+facet_grid(facets = zone~.,scales="free_y")
+ggplot(cpuedd, aes(week, value, fill = variable,group=fleet)) +
+geom_bar(position = "dodge",stat="identity") +
+facet_grid(facets = zone~.,scales="free_y")
+capture <- summary(sim,"catch.n")
+View(capture)
+N <- summary(sim,"stock.n")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+summary(sim,"catch.n")
+length(sim@catch.n)
+length(sim@catch.wt)
+length(sim@stock.n)
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+summary(sim,"cpue")
+summary(sim,"catch")
+return(paste("'",stat,"'"," don't match any of the available options. choose from :",x,sep=""))
+x <- c("catch.n","catch.wt","cpue","stock.n","stock.wt")
+return(paste("'",stat,"'"," don't match any of the available options. choose from :",x,sep=""))
+stat="cpe"
+return(paste("'",stat,"'"," don't match any of the available options. choose from :",x,sep=""))
+paste("'",stat,"'"," don't match any of the available options. choose from :",x,sep="")
+paste(x)
+paste("'",stat,"'"," don't match any of the available options. choose from :",paste(x),sep="")
+paste("'",stat,"'"," don't match any of the available options. choose from :",y,sep="")
+y <- paste(x)
+paste("'",stat,"'"," don't match any of the available options. choose from :",y,sep="")
+y <- paste(x,sep=",")
+sum(x)
+c(y)
+z <- c(y)
+rm(z)
+rm(y)
+library(stringr)
+str_c(x,"")
+z<- str_c(x,"")
+z<- str_join(x)
+z<- str_dup(x)
+z<- str_match(x)
+z<- str_match(x,pattern = "")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+summary(sim,"cpues")
+summary(sim,"cpue")
+sim <- run(sim)
+summary(sim,"stock.n")
+summary(sim,"stock.wt")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+devtools::use_vignette("my-vignette")
+devtools::use_vignette("DEPLr")
+You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+colors
+colors()
+colors("gray")
+data <- read.csv2(file = "/home/benmhamed/Aide Public/Bouthir/PourGraph.csv",sep=",",dec=",")
+dat <- melt(data = data,id.vars = names(data)[1:3])
+ggplot(data = dat)+geom_point(mapping = aes(x = value,y = Profondeur,color=cote.large)) +
+facet_grid(facets =Radiale~variable,scales = c("free")) +  ylim(c(100,0)) +
+scale_fill_manual("",values = c('black', 'gray30','gray90'))
+ggplot(data = dat)+geom_point(mapping = aes(x = value,y = Profondeur,fill=cote.large)) +
+facet_grid(facets =Radiale~variable,scales = c("free")) +  ylim(c(100,0)) +
+scale_fill_manual("",values = c('black', 'gray30','gray90'))
+ggplot(data = data)+geom_point(mapping = aes(x = Li,y = Profondeur,fill=cote.large)) +
+facet_grid(facets =Radiale~.,scales = c("free")) +  ylim(c(100,0)) +
+scale_fill_manual("",values = c('black', 'gray30','gray90'))
+ggplot(data = data)+geom_point(mapping = aes(x = Li,y = Profondeur,fill=cote.large)) +
+facet_grid(facets =Radiale~.,scales = c("free")) +  ylim(c(100,0)) +
+scale_fill_manual("",values = c('black', 'gray30','gray10'))
+ggplot(data = data)+geom_point(mapping = aes(x = Li,y = Profondeur,fill=cote.large,size=I(5))) +
+facet_grid(facets =Radiale~.,scales = c("free")) +  ylim(c(100,0)) +
+scale_fill_manual("",values = c('black', 'gray30','gray10'))
+ggplot(data = data)+geom_point(mapping = aes(x = Li,y = Profondeur,fill=cote.large),size=I(5)) +
+facet_grid(facets =Radiale~.,scales = c("free")) +  ylim(c(100,0)) +
+scale_fill_manual("",values = c('black', 'gray30','gray10'))
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+catch.n <- sim@catch.n
+dimnames(catch.n) <- c("iter","week","fleet","zone")
+dimnames(catch.n) <- list("iter","week","fleet","zone")
+list("iter","week","fleet","zone")
+list(rep("iter",3000),rep("week",19),rep("fleet",3),rep("zone",3))
+dimnames(catch.n) <- list(rep("iter",3000),rep("week",19),rep("fleet",3),rep("zone",3))
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+library(DEPLr)
+?DEPLr
+??DEPLr
+browseVignettes("DEPLr")
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+catch.n <- sim@catch.n
+catch <- catch.n[,,1,1]
+View(catch)
+catch.n
+library(plyr)
+ddcatch <- adply(.data = catch.n,.margins = c(2,3,4),.fun = identity)
+View(ddcatch)
+ddcatch <- adply(.data = catch.n,.margins = c(1),.fun = identity)
+View(ddcatch)
+ddcatch <- adply(.data = catch.n,.margins = c(1,2),.fun = identity)
+View(ddcatch)
+library(reshape2)
+View(ddcatch)
+ddcatch <- melt(adply(.data = catch.n,.margins = c(1,2),.fun = identity),id.vars = c("X1","X2"))
+View(ddcatch)
+library(ggplot2)
+ggplot(data = ddcatch)+geom_boxplot(aes(X2,value))+facet_grid(facets = variable~.)
+ggplot(data = ddcatch)+geom_boxplot(aes(X2,value))+facet_grid(facets = variable~.,scales = "free_y")
+stock <- sim@stock.n
+ddstock <- melt(adply(.data = stock,.margins = c(1,2),.fun = identity),id.vars = c("X1","X2"))
+View(ddstock)
+ggplot(data = ddstock)+geom_boxplot(aes(X2,value))+facet_grid(facets = variable~.,scales = "free_y")
+args(index)
+library(DEPLr)
+library(DEPLr)
+library(devtools)
+browseVignettes()
+library(DEPLr)
+browseVignettes()
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+catch <- catch.n(sim)
+N <- stock.n(sim)
+library(ggplot2)
+news(Version == "1.0.1", package = "ggplot2")
+cpue <- index(sim)
+?index
+??index
+install.packages("benchmark")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+file="/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp"
+dat=scan(file = file,what = "character",sep = "\n")
+cstNM <- as.numeric(str_split(string = dat[3],pattern = " ")[[1]][1])
+library(stringr)
+cstNM <- as.numeric(str_split(string = dat[3],pattern = " ")[[1]][1])
+LW <- as.numeric(str_split(string = str_split(string = dat[16],pattern = "#")[[1]][1],pattern = ",")[[1]][1:2])
+LW
+LW <- as.numeric(str_split(string = str_split(string = dat[3],pattern = "#")[[1]][1],pattern = ",")[[1]][1:2])
+LW
+LW[1]
+LW[2]
+LW*2
+GF <- as.numeric(str_split(string = str_split(string = dat[4],pattern = "#")[[1]][1],pattern = ",")[[1]][1:2])
+GF
+#' A function that allow reading an input simulation file
+#'
+#' @description Read a simulation input file
+#' @import stringr
+#' @param x : path of the input file
+read.sim <- function(file){
+if(!checkExt(file)){
+return("Error: The extintion of the do not match the correct form")
+}else{
+dat=scan(file = file,what = "character",sep = "\n")
+LW <- as.numeric(str_split(string = str_split(string = dat[3],pattern = "#")[[1]][1],pattern = ",")[[1]][1:2])
+GF <- as.numeric(str_split(string = str_split(string = dat[4],pattern = "#")[[1]][1],pattern = ",")[[1]][1:2])
+cstNM <- as.numeric(str_split(string = dat[5],pattern = " ")[[1]][1])
+valNM <- as.numeric(str_split(string = dat[6],pattern = " ")[[1]][1])
+proErr <- as.numeric(str_split(string = dat[7],pattern = " ")[[1]][1])
+obsErr <- as.numeric(str_split(string = dat[8],pattern = " ")[[1]][1])
+nbrSim <- as.numeric(str_split(string = dat[9],pattern = " ")[[1]][1])
+season <- as.numeric(str_split(string = dat[10],pattern = " ")[[1]][1])
+nbrFleet <- as.numeric(str_split(string = dat[11],pattern = " ")[[1]][1])
+nbrZone <- as.numeric(str_split(string = dat[12],pattern = " ")[[1]][1])
+discard <- as.numeric(str_split(string = dat[13],pattern = " ")[[1]][1])
+recTot <- as.numeric(str_split(string = dat[14],pattern = " ")[[1]][1])
+initLenghts <- as.numeric(str_split(string = str_split(string = dat[15],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone])
+propRec<- as.numeric(str_split(string = str_split(string = dat[16],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone])
+initAbund <- as.numeric(str_split(string = str_split(string = dat[17],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone])
+catchability <- as.numeric(str_split(string = str_split(string = dat[18],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone])
+codeData <- str_trim(as.character(str_split(string = dat[19],pattern = "#")[[1]][1]))
+fleetName <- as.character(str_trim(str_split(string = str_split(string = dat[20],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone]))
+zoneName <- rep("",nbrZone)
+dt.array <- array(data = NA,dim = c(season,nbrZone+2,nbrZone))
+index=1
+j=0
+while(index<nbrZone+1){
+j=21+(index-1)*(season+1)
+zoneName[index]=str_trim(as.character(str_split(string = dat[j],pattern = " ")[[1]][1]))
+for(i in 1:season){
+dt.array[i,,index] <-  as.numeric(unlist(str_split(string = str_split(string = dat[j+i],pattern = c(" "))[[1]],pattern = "\t")))
+}
+index=index+1
+}
+}
+dataList=list("cstNM"=cstNM,"valNM"=valNM,"proErr"=proErr,"obsErr"=obsErr,"nbrSim"=nbrSim,
+"season"=season,"nbrFleet"=nbrFleet,"nbrZone"=nbrZone,"discard"=discard,
+"recTot"=recTot,"initLenghts"=initLenghts,"propRec"=propRec,"initAbund"=initAbund,
+"catchability"=catchability,"codeData"=codeData,"fleetName"=fleetName,"zoneName"=zoneName,"dt.array"=dt.array)
+return(dataList)
+}
+x <- read.sim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+library(DEPLr)
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim@params
+sim@params@value
+sim <- run(sim)
+library(DEPLr)
+args(show)
+list(23)
+l <- list(23)
+names(l) <- "a"
+l
+l <- list(23,34,54)
+names(l) <- c("a","b","c")
+l
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+cont<- sim@controle
+cont
+cont@value
+cont@name
+length(cont@value)
+length(cont@name)
+cont@unit
+l<- list(cont@value)
+names(l) <- cont@name
+l
+library(plyr)
+unlist(l)
+f <- unlist(l)
+unlist(f)
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+cont <- sim@controle
+cont
+library(DEPLr)
+cont
+library(DEPLr)
+cont
+controle(sim)
+library(DEPLr)
+DEPLPar(2"")
+DEPLPar(2)
+library(DEPLr)
+DEPLPar(2)
+library(DEPLr)
+DEPLPar()
+library(DEPLr)
+DEPLPar()
+flee <- sim@zones@fleet
+library(DEPLr)
+fl <- DEPLFleet(name=c("A","B"),catchability =c(23,43) )
+fl
+library(DEPLr)
+library(DEPLr)
+DEPLFleet(catchability = c(32,54,65)
+)
+library(DEPLr)
+flee
+library(DEPLr)
+flee
+library(DEPLr)
+flee
+fl
+as.data.frame(flee)
+names(flee)
+library(DEPLr)
+catchability(flee)
+library(DEPLr)
+zon <- sim@zones
+as.data.frame(zon)
+zon
+fleet(zon)
+args(data)
+args(dataset)
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+#' A function that allow reading an input simulation file
+#'
+#' @description Read a simulation input file
+#' @import stringr
+#' @param x : path of the input file
+read.sim <- function(file){
+if(!checkExt(file)){
+return("Error: The extintion of the do not match the correct form")
+}else{
+dat=scan(file = file,what = "character",sep = "\n")
+LW <- as.numeric(str_split(string = str_split(string = dat[3],pattern = "#")[[1]][1],pattern = ",")[[1]][1:2])
+GF <- as.numeric(str_split(string = str_split(string = dat[4],pattern = "#")[[1]][1],pattern = ",")[[1]][1:2])
+cstNM <- as.numeric(str_split(string = dat[5],pattern = " ")[[1]][1])
+valNM <- as.numeric(str_split(string = dat[6],pattern = " ")[[1]][1])
+proErr <- as.numeric(str_split(string = dat[7],pattern = " ")[[1]][1])
+obsErr <- as.numeric(str_split(string = dat[8],pattern = " ")[[1]][1])
+nbrSim <- as.numeric(str_split(string = dat[9],pattern = " ")[[1]][1])
+season <- as.numeric(str_split(string = dat[10],pattern = " ")[[1]][1])
+nbrFleet <- as.numeric(str_split(string = dat[11],pattern = " ")[[1]][1])
+nbrZone <- as.numeric(str_split(string = dat[12],pattern = " ")[[1]][1])
+discard <- as.numeric(str_split(string = dat[13],pattern = " ")[[1]][1])
+recTot <- as.numeric(str_split(string = dat[14],pattern = " ")[[1]][1])
+initLenghts <- as.numeric(str_split(string = str_split(string = dat[15],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone])
+propRec<- as.numeric(str_split(string = str_split(string = dat[16],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone])
+initAbund <- as.numeric(str_split(string = str_split(string = dat[17],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone])
+catchability <- as.numeric(str_split(string = str_split(string = dat[18],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone])
+codeData <- str_trim(as.character(str_split(string = dat[19],pattern = "#")[[1]][1]))
+fleetName <- as.character(str_trim(str_split(string = str_split(string = dat[20],pattern = "#")[[1]][1],pattern = ",")[[1]][1:nbrZone]))
+zoneName <- rep("",nbrZone)
+dt.array <- array(data = NA,dim = c(season,nbrZone+2,nbrZone))
+index=1
+j=0
+while(index<nbrZone+1){
+j=21+(index-1)*(season+1)
+zoneName[index]=str_trim(as.character(str_split(string = dat[j],pattern = " ")[[1]][1]))
+for(i in 1:season){
+dt.array[i,,index] <-  as.numeric(unlist(str_split(string = str_split(string = dat[j+i],pattern = c(" "))[[1]],pattern = "\t")))
+}
+index=index+1
+}
+}
+dataList=list("LW"=LW,"GF"=GF,"cstNM"=cstNM,"valNM"=valNM,"proErr"=proErr,"obsErr"=obsErr,"nbrSim"=nbrSim,"season"=season,"nbrFleet"=nbrFleet,"nbrZone"=nbrZone,"discard"=discard,"recTot"=recTot,"initLenghts"=initLenghts,"propRec"=propRec,"initAbund"=initAbund,"catchability"=catchability,"codeData"=codeData,"fleetName"=fleetName,"zoneName"=zoneName,"dt.array"=dt.array)
+return(dataList)
+}
+#'LW
+#'@description Length-Weight relationship
+#'@return Weight corresponding to the giving length
+#'@export
+LW <- function(length,object){
+a <- object@params@value[1]
+b <- object@params@value[2]
+wi <- round(a*length^b,0)
+return(wi)
+}
+#' growth
+#' @description Theorical growth function of octopus after recruitment in weekly steps .
+#' @return Weight per week of octopus
+#' @export
+growth <- function(object){
+a <- object@params@value[3]
+b <- object@params@value[4]
+Ptheo<-round(exp(a*(7*(0:51) +b)),0)
+return(Ptheo)
+}
+#' age0
+#' @description Return the initial age in the begining of fishing season in weeks.
+#' @export
+age0 <- function(Ptheo,Pi){
+nbrzone <- length(Pi)
+t0 <- rep(NA,nbrzone)
+for(i in 1:nbrzone){
+t0[i]   <- which(abs(Ptheo-Pi[i])==min(abs(Ptheo-Pi[i])))
+}
+return(t0)
+}
+#'testit1
+#'@description progress bar from examples of utils package
+progressBar <- function(x)
+{
+pb <- txtProgressBar(min =0,max = 1,initial = 0,char = "=",title = "Simulation",style = 3)
+setTxtProgressBar(pb = pb,value = x,title = "Simulation")
+}
+file="/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp"
+tmp <- read.sim(file)
+getExt <- function(file)
+tolower(substr(file,max(gregexpr("\\.", file)[[1]])+1,nchar(file)))
+checkExt=function(x) (tolower(getExt(x))=="inp")
+tmp <- read.sim(file)
+tmp <- read.sim(file)
+library(stringr)
+tmp <- read.sim(file)
+controle=DEPLPar(value=c(tmp$cstNM,tmp$valNM,tmp$proErr,tmp$obsErr,tmp$nbrSim,tmp$season,
+tmp$nbrFleet,tmp$nbrZone,tmp$discard,tmp$recTot),
+name=c("cstNM","valNM","proErr","obsErr","nbrSim","season","nbrFleet",
+"nbrZone","discard","recTot"),
+unit="")
+controle
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+fleet(sim)
+fleet(zones(object = sim))
+zones(sim)
+describe(sim@zones)
+plot(sim@zones)
+args(fleet)
+library(DEPLr)
+fleet(sim)
+ff <- fleet(sim)
+library(DEPLr)
+sim <- DEPLSim(file = "/home/benmhamed/Wahid/my_packages/DEPLr/input/sim2.inp")
+sim <- run(sim)
+plot(sim)
+plot(zones(sim))
+catch.n <- summary(sim,"catch.n")
+cpue <- summary(sim,"cpue")
+controle(sim)
+browseVignettes()
+library(DEPLr)
+sim <- DEPLSim(file = "input/sim2.inp")
+controle(object = sim)
+str(sim)
+class(siù)
+class(sim)
+names(sim)

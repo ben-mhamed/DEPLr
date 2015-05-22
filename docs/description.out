@@ -1,0 +1,22 @@
+\BOOKMARK [1][-]{Section.0.Introduction.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{Section.1.Data.1}{Data}{}% 2
+\BOOKMARK [2][-]{Subsection.2.0.R.2}{R}{Section.1.Data.1}% 3
+\BOOKMARK [2][-]{Subsection.2.1.Files.2}{Files}{Section.1.Data.1}% 4
+\BOOKMARK [2][-]{Subsection.2.2.R.2}{R}{Section.1.Data.1}% 5
+\BOOKMARK [1][-]{Section.2.Assessment.1}{Assessment}{}% 6
+\BOOKMARK [1][-]{Section.3.Diagnostics.1}{Diagnostics}{}% 7
+\BOOKMARK [1][-]{Section.4.Reference Points.1}{Reference Points}{}% 8
+\BOOKMARK [1][-]{Section.5.Fitting.1}{Fitting}{}% 9
+\BOOKMARK [1][-]{Section.6.Plotting.1}{Plotting}{}% 10
+\BOOKMARK [2][-]{Subsection.7.0.CPUE.2}{CPUE}{Section.6.Plotting.1}% 11
+\BOOKMARK [2][-]{Subsection.7.1.Diagnostics.2}{Diagnostics}{Section.6.Plotting.1}% 12
+\BOOKMARK [3][-]{Subsubsection.7.2.0.Residuals.3}{Residuals}{Subsection.7.1.Diagnostics.2}% 13
+\BOOKMARK [3][-]{Subsubsection.7.2.1.Likelihood Profiling.3}{Likelihood Profiling}{Subsection.7.1.Diagnostics.2}% 14
+\BOOKMARK [1][-]{Section.7.Uncertainty.1}{Uncertainty}{}% 15
+\BOOKMARK [2][-]{Subsection.8.0.Bootstrapping.2}{Bootstrapping}{Section.7.Uncertainty.1}% 16
+\BOOKMARK [1][-]{Section.8.Management Procedure.1}{Management Procedure}{}% 17
+\BOOKMARK [2][-]{Subsection.9.0.Reference points.2}{Reference points}{Section.8.Management Procedure.1}% 18
+\BOOKMARK [2][-]{Subsection.9.1.Projections.2}{Projections}{Section.8.Management Procedure.1}% 19
+\BOOKMARK [2][-]{Subsection.9.2.Harvest Control Rules.2}{Harvest Control Rules}{Section.8.Management Procedure.1}% 20
+\BOOKMARK [1][-]{Section.9.Advice.1}{Advice}{}% 21
+\BOOKMARK [2][-]{Subsection.10.0.Kobe Framework.2}{Kobe Framework}{Section.9.Advice.1}% 22
