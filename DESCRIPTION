@@ -5,8 +5,22 @@ Version: 1.0
 Date: 2015-03-16
 Author: Abdelouahed BEN MHAMED, Abdelmalek Faraj
 Maintainer: Abdelouahed BEN MHAMED  <a.benmhamed@mail.com>
-Imports: ggplot2, plyr, reshape2, stringr, data.table
-Description: Implements a simulation depletion model for short lived species especially octopus
+Imports:
+    ggplot2,
+    plyr,
+    reshape2,
+    stringr,
+    data.table
+Depends:
+    ggplot2,
+    plyr,
+    reshape2,
+    stringr,
+    data.table
+Description: Implements a simulation depletion model for short lived species
+    especially octopus
 VignetteBuilder: knitr
 License: GPL-3
-Suggests: knitr
+Suggests:
+    knitr
+RoxygenNote: 5.0.1

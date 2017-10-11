@@ -16,7 +16,7 @@ setMethod(f = "run",signature = "DEPLSim",definition = function(object){
   fl <- object@zones@fleet@name  ### fleet names
   qi <- object@zones@fleet@catchability  ### catchability of each fleet
   Ri <- cbind(object@zones@data[,pr[8]+1,1:pr[8]]) ### Distribution of recruitment over the season
-  Zi <- sim@zones@name   ### Zones names
+  Zi <- object@zones@name   ### Zones names
   nz <- pr[8]
   ns <- pr[5]
   nf <- pr[7]
@@ -29,16 +29,19 @@ setMethod(f = "run",signature = "DEPLSim",definition = function(object){
   Pt <- growth(object)   ### Theorical weigth over octopus life
   Pi <- LW(length =l0,object)   ### intial weights
   t0 <- age0(Ptheo = Pt,Pi=Pi)
-  t0 <- t0+pr[9]
-  P0 <- Pt[t0]
-  B0 <- (N0*P0)/1e+06  ### intital biomasses
-  Eff <- object@zones@data
-  #sigma2p <- log(pr[3]^2+1)
-  #sigma2o <- log(pr[4]^2+1)
-  sigma2p <- pr[3]
-  sigma2o <- pr[4]
-  t <- 0
-  d <- nz*ns
+t0 <- t0+pr[9]
+P0 <- Pt[t0]
+print(t0)
+print(P0)
+print(Pt)
+B0 <- (N0*P0)/1e+06  ### intital biomasses
+Eff <- object@zones@data
+#sigma2p <- log(pr[3]^2+1)
+#sigma2o <- log(pr[4]^2+1)
+sigma2p <- pr[3]
+sigma2o <- pr[4]
+t <- 0
+d <- nz*ns
 dimname1 <- list(paste("iter",1:ns,sep=""),paste("week",1:nw,sep=""),fl,Zi)
 dimname2 <- list(paste("iter",1:ns,sep=""),paste("week",0:nw,sep=""),Zi)
 catch.n <- array(data = NA,dim = c(ns,nw,nf,nz));dimnames(catch.n) <- dimname1
@@ -56,7 +59,7 @@ cpue <- array(data = NA,dim = c(ns,nw,nf,nz));dimnames(cpue) <- dimname1
       for(k in 1:nw){  ### season
         catchTot <- 0
         for(l in 1:nf){  ### fleets
-          catchNm <- qi[l]*Eff[k,l,j]*stock.n[i,k,j]*exp(-Mi[k,j]/2) 
+          catchNm <- qi[l]*Eff[k,l,j]*stock.n[i,k,j]*exp(-Mi[k,j]/2)
           LogcatchNm<-log(catchNm)
           LogcatchN <- rnorm(mean = LogcatchNm, sd = sigma2o^(0.5), n=1)
           catch.n[i,k,l,j] <- exp(LogcatchN)
@@ -64,9 +67,9 @@ cpue <- array(data = NA,dim = c(ns,nw,nf,nz));dimnames(cpue) <- dimname1
           if(Eff[k,l,j]>0){
             cpue[i,k,l,j] <- catch.wt[i,k,l,j]/Eff[k,l,j]
           }else{
-            cpue[i,k,l,j] <- 0 
+            cpue[i,k,l,j] <- 0
           }
-          catchTot <- catchTot+catch.n[i,k,l,j] 
+          catchTot <- catchTot+catch.n[i,k,l,j]
         }
         Nm <- max(stock.n[i,k,j]*exp(-Mi[k,j]) - catchTot*exp(-Mi[k,j]/2) + Ri[k,j]*pr[10]*ri[j]*exp(-Mi[k,j]/2),1)
         logNm <- log(Nm)
