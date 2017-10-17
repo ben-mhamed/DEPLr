@@ -26,5 +26,5 @@ DEPLSim <- function(file="missing"){
     return(new(Class = "DEPLSim",controle=controle,params=params,zones=zones, 
                catch.n=array(),catch.wt=array(),stock.n=array(), 
                stock.wt=array(),cpue=array()))  
-  }
+}
 } 
