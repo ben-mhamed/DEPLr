@@ -6,7 +6,7 @@ model{
   Log_N[1] ~ dnorm(Log_N_Mean[1],Log_N_Tau)
   N[1] <- exp(Log_N[1])
   
-  for(i in 2:(nobs+1)){
+  for(i in 2:nobs){
     Log_N_Mean[i] <- log(max(N[i-1]*exp(-M[Month[i-1]])+Lambda[i-1]*Rec[Year[i-1]]*exp(-0.5*M[Month[i-1]])-CatchN_TOT[i-1]*exp(-0.5*M[Month[i-1]]),0.00001))
     Log_N[i] ~ dnorm(Log_N_Mean[i],Log_N_Tau)
     N[i] <- exp(Log_N[i])
@@ -14,44 +14,40 @@ model{
   
   # Match to total catch of PA
   for(i in 1:nobsPA){
-    Log_C_PA_Mean[i] <- Log_Q_PA[Year[i]] + Log_N[i] + log(Effort_PA[i]) + log(Pm[i])
-    Log_C_pa_wt[i] ~ dnorm(Log_C_PA_Mean[i],Log_CPUE_Tau)
+    Log_CatchWT_PA_Mean[i] <- Log_Q_PA + Log_N[i] + log(Effort_PA[i]) + log(Pm[i])
+    Log_CatchWT_PA[i] ~ dnorm(Log_CatchWT_PA_Mean[i],Log_C_PA_Tau)
   }
   #Match to total catch of PI
   for(i in 1:nobsPI){
-    Log_C_PI_Mean[i] <- Log_Q_PI[Year[i]] + Log_N[i] + log(Effort_PI[i]) + log(Pm[i])
-    Log_C_pi_wt[i] ~ dnorm(Log_C_PI_Mean[i],Log_CPUE_Tau)
+    Log_CatchWT_PI_Mean[i] <- Log_Q_PI + Log_N[i] + log(Effort_PI[i]) + log(Pm[i])
+    Log_CatchWT_PI[i] ~ dnorm(Log_CatchWT_PI_Mean[i],Log_C_PI_Tau)
   }
   
   # Predict total catch of PA
   for(i in 1:nobsPA){
-    Log_C_PA_Mean_Pred[i] <- Log_Q_PA[Year[i]] + Log_N[i] + log(Effort_PA[i]) + log(Pm[i])
-    Log_C_pa_wt_Pred[i] ~ dnorm(Log_C_PA_Mean_Pred[i],Log_CPUE_Tau)
+    Log_C_PA_Mean_Pred[i] <- Log_Q_PA + Log_N[i] + log(Effort_PA[i]) + log(Pm[i])
+    Log_C_pa_wt_Pred[i] ~ dnorm(Log_C_PA_Mean_Pred[i],Log_C_PA_Tau)
     AC_pa_wt_Pred[i] <- exp(Log_C_pa_wt_Pred[i])
   }
   # Predict total catch of PI
   for(i in 1:nobsPI){
-    Log_C_PI_Mean_Pred[i] <- Log_Q_PI[Year[i]] + Log_N[i] + log(Effort_PI[i]) + log(Pm[i])
-    Log_C_pi_wt_Pred[i] ~ dnorm(Log_C_PI_Mean_Pred[i],Log_CPUE_Tau)
+    Log_C_PI_Mean_Pred[i] <- Log_Q_PI + Log_N[i] + log(Effort_PI[i]) + log(Pm[i])
+    Log_C_pi_wt_Pred[i] ~ dnorm(Log_C_PI_Mean_Pred[i],Log_C_PI_Tau)
     AC_pi_wt_Pred[i] <- exp(Log_C_pi_wt_Pred[i])
   }
   
-  # Priors
-  Log_Q_PA_Mean ~ dnorm(-9.903486,3.453877)I(-14.50866,-2.995732) # [5e-8, 5e-2]
-  Log_Q_PA_Tau ~ dgamma(0.001,0.001)
-  for(i in 1:nYears){
-    Log_Q_PA[i] ~ dnorm(Log_Q_PA_Mean,Log_Q_PA_Tau)
-    Q_PA[i] <- exp(Log_Q_PA[i])
-  }
-  Log_Q_PI_Mean ~ dnorm(-9.903486,3.453877)I(-14.50866,-2.995732) # [5e-8, 5e-2]
-  Log_Q_PI_Tau ~ dgamma(0.001,0.001)
-  for(i in 1:nYears){
-    Log_Q_PI[i] ~ dnorm(Log_Q_PI_Mean,Log_Q_PI_Tau)
-    Q_PI[i] <- exp(Log_Q_PI[i])
+  for(i in 1:nobs){
+    Biomass[i] <- (N[i]*Pm[i])/1000
   }
   
-  Log_CPUE_Tau ~ dgamma(0.001,0.01)
-  Log_CPUE_sigma <- sqrt(1/Log_CPUE_Tau)
+  # Priors
+  Log_Q_PA ~ dnorm(-9.903486,3.453877)I(-14.50866,-7.600902) # [5e-8, 5e-4]
+  Q_PA <- exp(Log_Q_PA)
+  Log_Q_PI ~ dnorm(-9.903486,3.453877)I(-14.50866,-7.600902) # [5e-8, 5e-4]
+  Q_PI <- exp(Log_Q_PI)
+  
+  Log_C_PA_Tau ~ dgamma(0.001,0.01)
+  Log_C_PI_Tau ~ dgamma(0.001,0.01)
   
   for(i in 1:12){
     Log_M[i] ~ dnorm(-2,1.5)I(-6.907755,-0.6931472)
@@ -59,7 +55,7 @@ model{
   }
   
   for(i in 1:nYears){
-    Log_Rec[i] ~ dnorm(15,8)I(11,18)
+    Log_Rec[i] ~ dnorm(15,8)I(11,16)
     Rec[i] <- exp(Log_Rec[i])
   }
 }
