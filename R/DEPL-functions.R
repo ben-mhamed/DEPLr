@@ -14,7 +14,7 @@ LW <- function(length,object){
 growth <- function(object){
   a <- object@params@value[3]
   b <- object@params@value[4]
-  Ptheo<-round(exp(a*(7*(0:51) +b)),0) 
+  Ptheo<-round(exp(a*(7*(0:102) +b)),0) 
   return(Ptheo)
 }
 
