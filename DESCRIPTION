@@ -1,7 +1,7 @@
 Package: DEPLr
 Type: Package
 Title: Simulation Depletion Model with R
-Version: 1.1.1
+Version: 2.0.1
 Date: 2015-03-16
 Author: Abdelouahed BEN MHAMED, Abdelmalek Faraj
 Maintainer: Abdelouahed BEN MHAMED  <a.benmhamed@mail.com>
